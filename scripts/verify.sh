@@ -6,9 +6,8 @@ APP="$ROOT/dist/Screenotate.app"
 
 cd "$ROOT"
 swift build -c debug
-"$ROOT/scripts/package-app.sh" >/dev/null
+zsh "$ROOT/scripts/package-app.sh" >/dev/null
 plutil -lint "$APP/Contents/Info.plist"
 codesign --verify --deep --strict "$APP"
 test -x "$APP/Contents/MacOS/Screenotate"
 echo "Screenotate verification passed"
-  
