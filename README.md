@@ -4,7 +4,7 @@ Screenotate is a native macOS prototype for leaving task-like **resume markers**
 
 ## Try it
 
-1. Run `scripts/package-app.sh`.
+1. Run `zsh scripts/package-app.sh`.
 2. Open `dist/Screenotate.app`.
 3. In Cursor—or any other app—press **Control–Option–A**.
 4. Type what you need to remember and press Return.
