@@ -831,7 +831,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func setupMenu() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        statusItem.button?.image = NSImage(systemSymbolName: "checkmark.bubble", accessibilityDescription: "Screenotate")
+        if let iconURL = Bundle.main.url(forResource: "screenotate-icon", withExtension: "png"),
+           let icon = NSImage(contentsOf: iconURL) {
+            icon.size = NSSize(width: 18, height: 18)
+            icon.isTemplate = false
+            icon.accessibilityDescription = "Screenotate"
+            statusItem.button?.image = icon
+        } else {
+            statusItem.button?.image = NSImage(systemSymbolName: "checkmark.bubble", accessibilityDescription: "Screenotate")
+        }
         let menu = NSMenu()
         let sticky = menu.addItem(withTitle: "New sticky note…", action: #selector(beginStickyNote), keyEquivalent: "")
         sticky.target = self
@@ -1089,6 +1097,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func openDataFolder() {
         NSWorkspace.shared.open(AnnotationStore.shared.annotationsURL.deletingLastPathComponent())
     }
+}
+
+if CommandLine.arguments.contains("--accessibility-status") {
+    print(AccessibilityChecklistReader.isTrusted(prompt: false) ? "enabled" : "not-enabled")
+    exit(EXIT_SUCCESS)
+}
+
+if let flagIndex = CommandLine.arguments.firstIndex(of: "--checklist-diagnostic-pid"),
+   CommandLine.arguments.indices.contains(flagIndex + 1),
+   let processIdentifier = pid_t(CommandLine.arguments[flagIndex + 1]) {
+    let candidates = AccessibilityChecklistReader.candidates(processIdentifier: processIdentifier)
+    let likelyCount = candidates.filter(\.likelyTask).count
+    print("candidates=\(candidates.count)")
+    print("likely_tasks=\(likelyCount)")
+    exit(EXIT_SUCCESS)
 }
 
 let app = NSApplication.shared

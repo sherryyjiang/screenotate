@@ -1,5 +1,7 @@
 # Screenotate
 
+<img src="Assets/screenotate-icon.png" alt="Screenotate sticky-note character icon" width="144">
+
 Screenotate is a native macOS prototype for leaving task-like **resume markers** on any app surface. Markers are attached to the foreground app and window title, disappear when you leave that context, and return when you come back.
 
 ## Try it
@@ -32,6 +34,18 @@ Automation URLs: `screenotate://note`, `screenotate://checklist`, `screenotate:/
 5. Choose **Create markers**.
 
 You can also open `screenotate://import` from a launcher or local automation.
+
+For troubleshooting, the packaged executable supports a read-only permission check:
+
+```sh
+Screenotate.app/Contents/MacOS/Screenotate --accessibility-status
+```
+
+Developers can validate extraction without printing captured text by passing a target process ID:
+
+```sh
+Screenotate.app/Contents/MacOS/Screenotate --checklist-diagnostic-pid 12345
+```
 
 ## Chronicle data
 
