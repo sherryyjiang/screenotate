@@ -60,4 +60,3 @@ Visible markers are included in Chronicle's normal screen capture and OCR histor
 - Persistent highlighter rectangles drawn directly around screen content
 
 Planned after interaction validation: browser URL/file-path anchors, OCR fallback for apps with weak Accessibility support, editing, and automatic reposition persistence.
-  
